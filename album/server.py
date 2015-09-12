@@ -15,8 +15,8 @@ def index():
 def run(uid):
     h = db[uid]
     fields = []
-    for descriptor in h.descriptors:
-        for field in descriptor.data_keys.keys():
+    for descriptor in h['descriptors']:
+        for field in descriptor['data_keys']:
             fields.append(field)
     return render_template('run.html', uid=uid, fields=fields)
 
