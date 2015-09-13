@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<title>Runs</title>
+
+<!-- JQuery, minified -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+<h1>Runs</h1>
+<p>showing {{ -stop }}&ndash;{{ -start }} most recent runs</p>
+<nav>
+  <ul class="pager">
+      <li class="previous {% if page == 1 %}disabled{% endif %}"><a href="{% if page > 1 %}runs?page={{ page - 1 }}{% else %}#{% endif %}"><span aria-hidden="true">&larr;</span> Newer</a></li>
+    <li class="next"><a href="runs?page={{ page + 1}}">Older <span aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+</nav>
+<table class="table table-striped">
+<tr><th>uid</th><th>scan id</th></tr>
+{% for h in headers %}
+  <tr class="clickable-row" data-href="run/{{ h.start.uid }}">
+    <td>{{ h.start.uid }}</td>
+    <td>{{ h.start.scan_id }}</td>
+  </tr>
+{% endfor %}
+</table>
+</div>
+</body>
+<script>
+<!-- See http://stackoverflow.com/a/17147973/1221924 -->
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
+</script>
+</html>
