@@ -52,7 +52,7 @@ def run_show(*args, **kwargs):
         for field in descriptor['data_keys']:
             fields.append(field)
     
-    table = get_table(h, fill=False)
+    table = get_table(h, fill=True)
     # now = ttime.time()
     # data = {'time': [datetime.fromtimestamp(now + _) for _ in range(100)],
     #         'd1': np.sin(np.arange(0, 1, .01)),
@@ -64,6 +64,10 @@ def run_show(*args, **kwargs):
             continue
         df = pd.DataFrame(v.values, index=table['time'], columns=[k])
         df = df.dropna()
+        if df[k].values[0].shape:
+            # replace with the sum
+            df[k] = [np.sum(arr) for arr in df[k]]
+        print('k = %s ... df[k][0] = %s' % (k, df[k][0]))
         x_range = plots[0].x_range if plots else None
         fig = figure(title=k, x_axis_type='datetime', x_range=x_range)
         fig.line(df.index, df[k], line_width=2)
