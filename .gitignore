@@ -101,3 +101,7 @@ generated/
 
 # spyder ide
 .spyderworkspace*
+
+# ipynb
+*.ipynb
+.ipynb_checkpoints/

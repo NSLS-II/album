@@ -39,13 +39,7 @@ def run_index():
 
 
 @app.route('/run/<uid>')
-def run_show(*args, **kwargs):
-    if args:
-        print('args = %s' % args)
-    print('kwargs = %s' % kwargs)
-    args = flask.request.args
-    print('args = %s' % args)
-    uid = kwargs['uid']
+def run_show(uid):
     h = db[uid]
     fields = []
     for descriptor in h['descriptors']:
