@@ -64,17 +64,16 @@ def run_show(*args, **kwargs):
             continue
         df = pd.DataFrame(v.values, index=table['time'], columns=[k])
         df = df.dropna()
-        plots.append(TimeSeries(df, legend=True, title=k, xlabel='time'))
+        x_range = plots[0].x_range if plots else None
+        fig = figure(title=k, x_axis_type='datetime', x_range=x_range)
+        fig.line(df.index, df[k], line_width=2)
+        fig.circle(df.index, df[k], fill_color='white', size=8)
+        plots.append(fig)
     
     ncols = int(np.ceil(np.sqrt(len(plots))))
     nrows = int(np.ceil(len(plots) / ncols))
-    rows = []
-    for row in range(nrows):
-        rows.append(hplot(*plots[row*ncols:(row+1)*ncols]))
-    if len(rows) == 1:
-        plot, = rows
-    else:
-        plot = vplot(*rows)
+    rows = [hplot(*plots[row*ncols:(row+1)*ncols]) for row in range(nrows)]
+    plot = vplot(*rows)
     print('plot = %s' % plot)
     script, div = components(plot)
     
