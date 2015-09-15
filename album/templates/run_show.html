@@ -11,6 +11,12 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link
+      href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.css"
+      rel="stylesheet" type="text/css">
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.js">
+    {{ plot_resources|indent(4)|safe }}
+    {{ plot_script|indent(4)|safe }}
   </head>
   <body>
     <div class="container-fluid">
@@ -22,15 +28,7 @@
         {% endfor %}
         <!-- <li><a href="/run/{{ uid }}/plotter">Plot</a></li> -->
       </ul>
+      <body>{{ plot_div|indent(4)|safe }}</body>
     </div>
   </body>
-  <head>
-  <link
-    href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.css"
-    rel="stylesheet" type="text/css">
-  <script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.js">
-  {{ plot_resources|indent(4)|safe }}
-  {{ plot_script|indent(4)|safe }}
-  </head>
-  <body>{{ plot_div|indent(4)|safe }}</body>
 </html>
