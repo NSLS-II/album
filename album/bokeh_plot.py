@@ -5,8 +5,7 @@ from bokeh.resources import INLINE
 from bokeh.templates import RESOURCES
 from bokeh.io import vplot, hplot
 import numpy as np
-import pandas as pd
-from flask import render_template_string
+
 
 PLOT_RESOURCES = RESOURCES.render(
     js_raw=INLINE.js_raw,
@@ -26,18 +25,20 @@ BOKEH_HTML_TEMPLATE = """  <head>
   </head>
   <body>{{ plot_div|indent(4)|safe }}</body>"""
 
+
 def plot_table_by_time(table):
     plots = []
     table = table.set_index('time')
     for col in table:
-        df = table[col]
-        if df.values[0].shape:
+        s = table[col]
+        s.dropna(inplace=True)
+        if not np.isscalar(s.values[0]):
             # replace with the sum
-            df = df.applymap(np.sum)
+            s = s.apply(np.sum)
         x_range = plots[0].x_range if plots else None
         fig = figure(title=col, x_axis_type='datetime', x_range=x_range)
-        fig.line(df.index, df, line_width=2)
-        fig.circle(df.index, df, fill_color='white', size=8)
+        fig.line(s.index, s, line_width=2)
+        fig.circle(s.index, s, fill_color='white', size=8)
         plots.append(fig)
 
     ncols = int(np.ceil(np.sqrt(len(plots))))
