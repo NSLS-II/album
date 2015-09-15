@@ -15,17 +15,6 @@ PLOT_RESOURCES = RESOURCES.render(
 )
 
 
-BOKEH_HTML_TEMPLATE = """  <head>
-  <link
-    href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.css"
-    rel="stylesheet" type="text/css">
-  <script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bokeh_version }}.min.js">
-  {{ plot_resources|indent(4)|safe }}
-  {{ plot_script|indent(4)|safe }}
-  </head>
-  <body>{{ plot_div|indent(4)|safe }}</body>"""
-
-
 def plot_table_by_time(table):
     plots = []
     table = table.set_index('time')
