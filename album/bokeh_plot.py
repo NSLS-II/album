@@ -28,19 +28,16 @@ BOKEH_HTML_TEMPLATE = """  <head>
 
 def plot_table_by_time(table):
     plots = []
-    for k, v in table.items():
-        if k == 'time':
-            continue
-        df = pd.DataFrame(v.values, index=table['time'], columns=[k])
-        df = df.dropna()
-        if df[k].values[0].shape:
+    table = table.set_index('time')
+    for col in table:
+        df = table[col]
+        if df.values[0].shape:
             # replace with the sum
-            df[k] = [np.sum(arr) for arr in df[k]]
-        print('k = %s ... df[k][0] = %s' % (k, df[k][0]))
+            df = df.applymap(np.sum)
         x_range = plots[0].x_range if plots else None
-        fig = figure(title=k, x_axis_type='datetime', x_range=x_range)
-        fig.line(df.index, df[k], line_width=2)
-        fig.circle(df.index, df[k], fill_color='white', size=8)
+        fig = figure(title=col, x_axis_type='datetime', x_range=x_range)
+        fig.line(df.index, df, line_width=2)
+        fig.circle(df.index, df, fill_color='white', size=8)
         plots.append(fig)
 
     ncols = int(np.ceil(np.sqrt(len(plots))))
