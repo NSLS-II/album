@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from dataportal import DataBroker as db
 from dataportal.broker.simple_broker import get_table
-from bokeh_plot import plot_table_by_time
+from .bokeh_plot import plot_table_by_time
 
 app = Flask(__name__)
 
