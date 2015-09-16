@@ -32,16 +32,16 @@ def run_show(uid):
     for descriptor in h['descriptors']:
         for field in descriptor['data_keys']:
             fields.append(field)
-    
+
     table = get_table(h, fill=True)
     bokeh_kw = plot_table_by_time(table)
     return render_template('run_show.html', uid=uid, fields=fields,
                            **bokeh_kw)
 
 
-def run(debug=False):
+def run(debug=True):
     app.run(debug=debug)
 
 
 if __name__ == '__main__':
-    run(debug=True)
+    run()
