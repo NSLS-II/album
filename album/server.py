@@ -38,5 +38,10 @@ def run_show(uid):
     return render_template('run_show.html', uid=uid, fields=fields,
                            **bokeh_kw)
 
+
+def run(debug=False):
+    app.run(debug=debug)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    run(debug=True)

@@ -1,0 +1,2 @@
+include versioneer.py
+include album/_version.py
