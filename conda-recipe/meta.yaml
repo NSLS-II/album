@@ -22,7 +22,7 @@ requirements:
     - python
     - bokeh
     - flask
-    - dataportal
+    - dataportal >=0.2.0
     - numpy
 
 test:
