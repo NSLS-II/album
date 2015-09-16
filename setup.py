@@ -22,6 +22,6 @@ setup(
     packages=['album'],
     entry_points={
         'console_scripts': [
-            'album = album.server']},
+            'album = album.server:run']},
     package_data={'album.templates': ['*.html']},
 )
