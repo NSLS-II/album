@@ -24,4 +24,5 @@ setup(
         'console_scripts': [
             'album = album.server:run']},
     package_data={'album.templates': ['*.html']},
+    include_package_data=True
 )
