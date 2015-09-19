@@ -19,7 +19,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     name='album',
     author='Brookhaven National Laboratory',
-    packages=['album'],
+    packages=['album', 'album.templates'],
     entry_points={
         'console_scripts': [
             'album = album.server:run']},
