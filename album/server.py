@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from dataportal import DataBroker as db
 from dataportal.broker.simple_broker import get_table
-from bokeh_plot import plot_table_by_time
+from .bokeh_plot import plot_table_by_time
 
 app = Flask(__name__)
 
@@ -32,11 +32,16 @@ def run_show(uid):
     for descriptor in h['descriptors']:
         for field in descriptor['data_keys']:
             fields.append(field)
-    
+
     table = get_table(h, fill=True)
     bokeh_kw = plot_table_by_time(table)
     return render_template('run_show.html', uid=uid, fields=fields,
                            **bokeh_kw)
 
+
+def run(debug=True):
+    app.run(debug=debug)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    run()
