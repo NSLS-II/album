@@ -10,7 +10,7 @@ build:
 
   # Note that this will override the default build string with the Python
   # and NumPy versions
-  string: {{ environ.get('GIT_BUILD_STR', '') }}_np{{ np }}py{{ py }}
+  string: {{ environ.get('GIT_BUILD_STR', '') }}_py{{ py }}
 
   entry_points:
     - album = album.server:run
@@ -18,14 +18,12 @@ build:
 requirements:
   build:
     - python
-    - numpy
-    - setuptools
 
   run:
     - python
     - bokeh
     - flask
-    - dataportal >=0.2.0
+    - databroker >=0.3.0
     - numpy
 
 test:

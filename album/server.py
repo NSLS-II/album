@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
-from dataportal import DataBroker as db
-from dataportal.broker.simple_broker import get_table
+from databroker import DataBroker as db, get_table
+from databroker.databroker import doc
 from .bokeh_plot import plot_table_by_time
+import humanize
 
 app = Flask(__name__)
 
@@ -9,6 +10,16 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return 'This is album.'
+
+def add_human_times_to_header_super_verbose(hdr):
+    hdr = dict(hdr)
+    hdr['start'] = dict(hdr['start'])
+    hdr['stop'] = dict(hdr['stop'])
+    hdr['start']['human_time'] = humanize.naturaltime(hdr['start']['time'])
+    hdr['stop']['human_time'] = humanize.naturaltime(hdr['stop']['time'])
+    hdr['stop']['scan_duration'] = humanize.naturaldelta(
+        hdr['stop']['time'] - hdr['start']['time'])
+    return hdr
 
 
 @app.route('/runs')
@@ -20,7 +31,8 @@ def run_index():
     print(request.args)
     page = int(request.args.get('page', 1))
     start, stop = -RUNS_PER_PAGE * page, -RUNS_PER_PAGE * (page - 1)
-    headers = db[start:stop]
+    headers = [add_human_times_to_header_super_verbose(hdr)
+               for hdr in db[start:stop]]
     return render_template('run_index.html', headers=headers, page=page,
                            start=start, stop=stop)
 

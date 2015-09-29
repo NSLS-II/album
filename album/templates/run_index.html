@@ -26,11 +26,14 @@
         </ul>
       </nav>
       <table class="table table-striped">
-      <tr><th>uid</th><th>scan id</th></tr>
+      <tr><th>uid</th><th>scan id</th><th>scan duration</th><th>start time</th><th>stop time</th></tr>
       {% for h in headers %}
         <tr class="clickable-row" data-href="run/{{ h.start.uid }}">
           <td>{{ h.start.uid }}</td>
           <td>{{ h.start.scan_id }}</td>
+          <td>{{ h.stop.scan_duration }}</td>
+          <td>{{ h.start.human_time }}</td>
+          <td>{{ h.stop.human_time }}</td>
         </tr>
       {% endfor %}
       </table>
